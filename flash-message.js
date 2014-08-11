@@ -60,7 +60,7 @@ Ember.Handlebars.registerHelper('flashMessage', function(options) {
       cancelTimer: function() {
         var timerToKill = this.get('myTimer');
 	if (timerToKill !== undefined) {
-          Ember.run.cancel(timer);
+          Ember.run.cancel(timerToKill);
 	}
       },
 
