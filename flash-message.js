@@ -24,7 +24,7 @@ Ember.Handlebars.registerHelper('flashMessage', function(options) {
       controller = container.lookup('controller:flashMessage'),
 
       parent = Ember.ContainerView.extend({
-      myTimer: null,
+      //myTimer: null,
       timerLength: 5000, //5sec default - TODO:  0 by default, configurable?
 
       hideAndShowMessage: function() {
@@ -59,7 +59,7 @@ Ember.Handlebars.registerHelper('flashMessage', function(options) {
       }.on('mouseEnter'),
 
       resetTimer: function () {
-        var length = get('timerLength')/2;
+        var length = this.get('timerLength')/2;
         this.scheduleTimer(length);
       }.on('mouseLeave')
     });
