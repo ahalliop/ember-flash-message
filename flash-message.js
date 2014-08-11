@@ -24,20 +24,44 @@ Ember.Handlebars.registerHelper('flashMessage', function(options) {
       controller = container.lookup('controller:flashMessage'),
 
       parent = Ember.ContainerView.extend({
-        hideAndShowMessage: function() {
-          var currentMessage = this.get('controller.currentMessage'),
-              view;
+      myTimer: null,
+      timerLength: 5000, //5sec default - TODO:  0 by default, configurable?
 
-          if (currentMessage) {
-            view = Ember.View.create({
-              template: template
-            });
-          }
+      hideAndShowMessage: function() {
+        var currentMessage = this.get('controller.currentMessage'),
+          view;
 
-          this.set('currentView', view);
-        }.observes('controller.currentMessage')
-      });
+        if (currentMessage) {
+          view = Ember.View.create({
+            template: template
+          });
+        }
 
+        this.set('currentView', view);
+      }.observes('controller.currentMessage'),
+
+      sendDismissal: function () {
+        this.get('controller').send('dismissFlashMessage');
+      },
+             
+      scheduleTimer: function() {
+        var length = this.get('timerLength');
+        var newTimer = Ember.run.later(this, function() {
+          this.sendDismissal();
+        }, length);
+        this.set('myTimer', newTimer);
+      //}.on('init'),
+      },
+
+      handleReflection: function () {
+        var timerToKill = this.get('myTimer');
+        Ember.run.cancel(timerToKill);
+      }.on('mouseEnter'),
+
+      resetTimer: function () {
+        this.scheduleTimer(); //reset timer - TODO: maybe with shorter value?
+      }.on('mouseLeave')
+    });
   options.hash.controller = controller;
   options.hashTypes = options.hashTypes || {};
 
