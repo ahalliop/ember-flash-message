@@ -22,20 +22,21 @@ Ember.Handlebars.registerHelper('flashMessage', function(options) {
   var template = options.fn,
       container = options.data.keywords.controller.container,
       controller = container.lookup('controller:flashMessage'),
-      hash = options.hash,
-      timerDuration = null || hash.timerDuration,
+      //hash = options.hash,
+      //timerDuration = null || hash.timerDuration,
 
       parent = Ember.ContainerView.extend({
+      timerDuration = 5000,
 
       hideAndShowMessage: function() {
         var currentMessage = this.get('controller.currentMessage'),
-          view;
+            view;
 
         if (currentMessage) {
           view = Ember.View.create({
             template: template
           });
-          if (this.get('timerDuration') !== null) {
+          if (this.get('timerDuration') !== 0) {
             this.scheduleTimer();
           }
         }
