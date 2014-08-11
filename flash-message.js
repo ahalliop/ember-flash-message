@@ -65,8 +65,7 @@ Ember.Handlebars.registerHelper('flashMessage', function(options) {
       },
 
       handleReflection: function() {
-	  this.cancelTimer();
-	}
+	this.cancelTimer();
       }.on('mouseEnter'),
 
       resetTimer: function() {
