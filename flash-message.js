@@ -25,8 +25,8 @@ Ember.Handlebars.registerHelper('flashMessage', function(options) {
       //hash = options.hash,
       //timerDuration = null || hash.timerDuration,
 
-      parent = Ember.ContainerView.extend({
-      timerDuration = 5000,
+  parent = Ember.ContainerView.extend({
+      timerDuration:5000,
 
       hideAndShowMessage: function() {
         var currentMessage = this.get('controller.currentMessage'),
