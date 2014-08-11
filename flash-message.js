@@ -43,15 +43,14 @@ Ember.Handlebars.registerHelper('flashMessage', function(options) {
       sendDismissal: function () {
         this.get('controller').send('dismissFlashMessage');
       },
-             
-      scheduleTimer: function() {
-        var length = this.get('timerLength');
+
+      scheduleTimer: function(value) {
+        var length = value || this.get('timerLength');
         var newTimer = Ember.run.later(this, function() {
           this.sendDismissal();
         }, length);
         this.set('myTimer', newTimer);
-      //}.on('init'),
-      },
+      }.on('init'),
 
       handleReflection: function () {
         var timerToKill = this.get('myTimer');
@@ -59,7 +58,8 @@ Ember.Handlebars.registerHelper('flashMessage', function(options) {
       }.on('mouseEnter'),
 
       resetTimer: function () {
-        this.scheduleTimer(); //reset timer - TODO: maybe with shorter value?
+        var length = get('timerLength')/2;
+        this.scheduleTimer(length);
       }.on('mouseLeave')
     });
   options.hash.controller = controller;
