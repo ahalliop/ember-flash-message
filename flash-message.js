@@ -25,11 +25,11 @@ Ember.Handlebars.registerHelper('flashMessage', function(options) {
       controller = container.lookup('controller:flashMessage'),
 
   parent = Ember.ContainerView.extend({
-      timerDuration: this.get('controller.dismissTimer') || null,
 
       hideAndShowMessage: function() {
         var currentMessage = this.get('controller.currentMessage'),
-            view;
+          timerDuration = this.get('controller.dismissTimer') || null,
+          view;
 
         if (currentMessage) {
           view = Ember.View.create({
@@ -59,19 +59,20 @@ Ember.Handlebars.registerHelper('flashMessage', function(options) {
 
       cancelTimer: function() {
         var timerToKill = this.get('myTimer');
-        Ember.run.cancel(timerToKill);
+	if (timerToKill !== undefined) {
+          Ember.run.cancel(timer);
+	}
       },
 
       handleReflection: function() {
-	if (timerDuration !== null) {
 	  this.cancelTimer();
 	}
       }.on('mouseEnter'),
 
       resetTimer: function() {
+        var timerDuration: this.get('controller.dismissTimer') || null,
 	if (timerDuration !== null) {
-          var duration = this.get('timerDuration')/2;
-          this.scheduleTimer(duration);
+          this.scheduleTimer(duration/2);
 	}
       }.on('mouseLeave')
     });
