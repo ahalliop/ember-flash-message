@@ -71,7 +71,7 @@ Ember.Handlebars.registerHelper('flashMessage', function(options) {
       resetTimer: function() {
         var timerDuration = this.get('controller.dismissTimer') || null;
 	if (timerDuration !== null) {
-          this.scheduleTimer(duration/2);
+          this.scheduleTimer(timerDuration/2);
 	}
       }.on('mouseLeave')
     });
