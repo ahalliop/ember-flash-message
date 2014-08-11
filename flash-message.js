@@ -22,10 +22,10 @@ Ember.Handlebars.registerHelper('flashMessage', function(options) {
   var template = options.fn,
       container = options.data.keywords.controller.container,
       controller = container.lookup('controller:flashMessage'),
+      hash = options.hash,
+      timerDuration = null || hash.timerDuration,
 
       parent = Ember.ContainerView.extend({
-      //myTimer: null,
-      timerLength: 5000, //5sec default - TODO:  0 by default, configurable?
 
       hideAndShowMessage: function() {
         var currentMessage = this.get('controller.currentMessage'),
@@ -35,7 +35,9 @@ Ember.Handlebars.registerHelper('flashMessage', function(options) {
           view = Ember.View.create({
             template: template
           });
-          this.scheduleTimer();
+          if (this.get('timerDuration') !== null) {
+            this.scheduleTimer();
+          }
         }
 
         this.set('currentView', view);
@@ -46,10 +48,10 @@ Ember.Handlebars.registerHelper('flashMessage', function(options) {
       },
 
       scheduleTimer: function(value) {
-        var length = value || this.get('timerLength');
+        var duration = value || this.get('timerDuration');
         var newTimer = Ember.run.later(this, function() {
           this.sendDismissal();
-        }, length);
+        }, duration);
         this.set('myTimer', newTimer);
       },
 
@@ -59,8 +61,8 @@ Ember.Handlebars.registerHelper('flashMessage', function(options) {
       }.on('mouseEnter'),
 
       resetTimer: function () {
-        var length = this.get('timerLength')/2;
-        this.scheduleTimer(length);
+        var duration = this.get('timerDuration')/2;
+        this.scheduleTimer(duration);
       }.on('mouseLeave')
     });
   options.hash.controller = controller;
