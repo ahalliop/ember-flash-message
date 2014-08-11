@@ -35,6 +35,7 @@ Ember.Handlebars.registerHelper('flashMessage', function(options) {
           view = Ember.View.create({
             template: template
           });
+          this.scheduleTimer();
         }
 
         this.set('currentView', view);
@@ -50,7 +51,7 @@ Ember.Handlebars.registerHelper('flashMessage', function(options) {
           this.sendDismissal();
         }, length);
         this.set('myTimer', newTimer);
-      }.on('init'),
+      },
 
       handleReflection: function () {
         var timerToKill = this.get('myTimer');
