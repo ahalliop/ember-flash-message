@@ -77,6 +77,13 @@ While you could easily remove flash messages yourself, the main FlashMessageCont
 {{/flashMessage}}
 ```
 
+You can also specify a value so that the flash message will be automatically dismissed after the configured time (in milliseconds).
+```javascript
+flashMessage('Your profile has been updated!', 5000).now();
+```
+
+If user mouses onto the flash message, the timer will be stopped, and only restarted again (at half the configure value) if the user mouses away.
+
 ### Controller
 
 The flash message can be set from the controller by adding a ``needs``
