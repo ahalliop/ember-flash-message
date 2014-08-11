@@ -69,7 +69,7 @@ Ember.Handlebars.registerHelper('flashMessage', function(options) {
       }.on('mouseEnter'),
 
       resetTimer: function() {
-        var timerDuration = this.get('controller.dismissTimer') || null,
+        var timerDuration = this.get('controller.dismissTimer') || null;
 	if (timerDuration !== null) {
           this.scheduleTimer(duration/2);
 	}
